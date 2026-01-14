@@ -1,33 +1,33 @@
+export const dynamic = 'force-dynamic';
+
 import { getDentistas } from '@/lib/dentalink';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Dentista } from '@/types/dentalink';
 
+// IMPORTANTE: El export default debe ser async
 export default async function Page() {
   const dentistas: Dentista[] = await getDentistas();
 
+  // Siempre debe haber un return con JSX
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">Staff Médico - Dentalink API</h1>
+    <main className="p-8">
+      <h1 className="text-2xl font-bold mb-6">Staff Médico Tabancura</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {dentistas.map((dentista) => (
-          <Card key={dentista.id}>
-            <CardHeader>
-              <CardTitle>{dentista.nombre} {dentista.apellidos}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600">Especialidad ID: {dentista.id_especialidad}</p>
-              <p className="text-sm font-medium">
-                Estado: {dentista.habilitado ? '✅ Activo' : '❌ Inactivo'}
-              </p>
-              {dentista.agenda_online && (
-                <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
-                  Agenda Online Disponible
-                </span>
-              )}
-            </CardContent>
-          </Card>
-        ))}
+        {dentistas && dentistas.length > 0 ? (
+          dentistas.map((dentista: Dentista) => (
+            <Card key={dentista.id}>
+              <CardHeader>
+                <CardTitle>{dentista.nombre} {dentista.apellidos}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">ID: {dentista.id}</p>
+              </CardContent>
+            </Card>
+          ))
+        ) : (
+          <p>No se encontraron dentistas.</p>
+        )}
       </div>
-    </div>
+    </main>
   );
 }

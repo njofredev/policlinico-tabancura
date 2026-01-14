@@ -5,7 +5,7 @@ export async function getDentistas() {
   const response = await fetch(`${BASE_URL}/dentistas`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${TOKEN}`, // Formato de autenticación requerido
+      'Authorization': `Token ${TOKEN}`, // Formato de autenticación requerido
       'Content-Type': 'application/json',
     },
     next: { revalidate: 3600 } // Caché optimizada para Next.js
